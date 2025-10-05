@@ -12,6 +12,7 @@ import {
 } from 'recharts';
 import Papa from 'papaparse';
 import ArticleCard from './components/ArticleCard';
+import MoreArticles from './components/MoreArticles';
 
 interface Article {
   title: string;
@@ -255,6 +256,7 @@ export default function Home() {
             </div>
           </section>
         )}
+        {selectedKeyword && <MoreArticles keyword={selectedKeyword} />}
       </main>
 
       <footer className="py-8 text-center text-text-dark/60">
