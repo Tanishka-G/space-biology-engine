@@ -27,7 +27,7 @@ interface Node extends SimulationNodeDatum {
   z: number;
 }
 
-interface Link extends D3Link<Node, Node> {
+interface Link extends SimulationLinkDatum<Node> {
     value: number;
 }
 
