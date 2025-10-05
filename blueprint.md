@@ -23,7 +23,7 @@ This is a Next.js application that visualizes the frequency of keywords in a dat
 ### UI Components
 
 *   **Chart**: A responsive bar chart from the `recharts` library to display keyword frequency.
-*   **3D Keyword Map**: An interactive 3D point cloud of keywords, with similar keywords clustered together.
+*   **3D Keyword Map**: An interactive 3D point cloud of keywords, with similar keywords clustered together based on their semantic meaning.
 *   **Gradient Accent**: A subtle animated gradient is used for accents and backgrounds.
 *   **Glassmorphism**: The chart container has a frosted glass effect, with a blurred background and a subtle border.
 
@@ -32,16 +32,16 @@ This is a Next.js application that visualizes the frequency of keywords in a dat
 *   **Hover Effect**: When hovering over a bar in the chart, it will have a "glow" effect.
 *   **Tooltip**: The tooltip for the chart has been redesigned for better visibility and a more professional look.
 *   **3D Map Interaction**: Users can scroll, pan, and zoom the 3D keyword map to explore the keyword clusters. Hovering over a point reveals a label with the keyword.
+*   **Hover Label Display**: When a user hovers over a sphere in the 3D keyword map, the corresponding keyword and its count are now displayed in the top-right corner of the canvas for improved visibility.
 
 ### 3D Keyword Map Design
 
-*   **Background**: `Warm Gray — #F5F5F5`
-*   **Point Colors**: `Mist Blue — #AEC6CF`, `Powder Pink — #F6C1C1`, `Pale Lilac — #D8BFD8`, `Mint Cream — #E8F8F5`
+*   **Background**: `Black — #000000`
+*   **Point Colors**: A vibrant, planetary-inspired palette including `'#FF5733', '#33FF57', '#3357FF', '#FF33A1', '#A133FF', '#33FFA1', '#FFC300', '#C70039', '#900C3F', '#581845'`.
+*   **Sphere Appearance**: The spheres have a metallic finish to resemble planets.
+*   **Layout Algorithm**: A force-directed layout using `d3-force` and the Jaro-Winkler distance algorithm from the `natural` library. This creates a more meaningful layout where keywords with higher similarity are positioned closer together, while maintaining a clear and organized structure.
+*   **Connection Lines**: Thin, semi-transparent lines are drawn between keywords with a high similarity score, visually representing their relationships.
 
 ## Current Plan
 
-*   Create a 3D keyword map.
-*   Use a force-directed graph to cluster similar keywords.
-*   Use `@react-three/fiber` and `@react-three/drei` for 3D rendering.
-*   Create a new `KeywordCloud.tsx` component.
-*   Integrate the component into the main page.
+*   Refine the keyword spacing in the 3D map by using a force-directed layout that considers keyword similarity.

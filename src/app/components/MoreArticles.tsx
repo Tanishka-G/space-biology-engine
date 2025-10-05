@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
 
 interface Study {
   study_id: string;
@@ -8,6 +9,16 @@ interface Study {
   description: string;
   url: string;
 }
+
+interface NasaHit {
+    _source: {
+      'Authoritative Source URL'?: string;
+      'Study Identifier'?: string;
+      Accession?: string;
+      'Study Title': string;
+      'Study Description': string;
+    };
+  }
 
 interface MoreArticlesProps {
   keyword: string | null;
@@ -24,10 +35,13 @@ const MoreArticles = ({ keyword }: MoreArticlesProps) => {
         const data = await response.json();
         if (data.hits && data.hits.hits) {
           const fetchedStudies = data.hits.hits
-            .map((hit: any) => {
+            .map((hit: NasaHit) => {
                 const source = hit._source;
                 const authoritativeSourceUrl = source['Authoritative Source URL'];
                 const study_id = source['Study Identifier'] || source.Accession;
+                if (!study_id) {
+                    return null;
+                }
                 const url = `https://osdr.nasa.gov/bio/repo/search?q=${authoritativeSourceUrl}&data_source=cgene,alsda,esa,nih_geo_gse,ebi_pride,mg_rast&data_type=study`;
 
                 return {
@@ -37,7 +51,7 @@ const MoreArticles = ({ keyword }: MoreArticlesProps) => {
                     url: url
                 };
             })
-            .filter((study: Study) => study.description && study.url);
+            .filter((study: Study | null): study is Study => study !== null && !!study.description && !!study.url);
           setStudies(fetchedStudies);
         }
       } catch (error) {
@@ -63,7 +77,7 @@ const MoreArticles = ({ keyword }: MoreArticlesProps) => {
             className="block p-6 bg-white rounded-lg border border-gray-200 shadow-md hover:bg-gray-100 transition-colors duration-200"
           >
             <div className="flex items-center mb-4">
-              <img src="/file.svg" alt="File icon" className="w-8 h-8 mr-4" />
+              <Image src="/file.svg" alt="File icon" width={32} height={32} className="mr-4" />
               <h4 className="text-xl font-bold text-gray-900">{study.study_title}</h4>
             </div>
             <p className="font-normal text-gray-700">

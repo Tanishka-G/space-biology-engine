@@ -1,6 +1,14 @@
 import React from 'react';
 
-const RoundedBar = (props: any) => {
+interface RoundedBarProps {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  fill: string;
+}
+
+const RoundedBar = (props: RoundedBarProps) => {
   const { fill, x, y, width, height } = props;
   const radius = 10; // Radius for the top corners
 

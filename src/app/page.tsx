@@ -1,5 +1,7 @@
 'use client';
 import React, { useState, useEffect, useRef } from 'react';
+import { Canvas } from '@react-three/fiber';
+import { OrbitControls } from '@react-three/drei';
 import {
   BarChart,
   Bar,
@@ -27,7 +29,15 @@ interface KeywordCount {
   count: number;
 }
 
-const RoundedBar = (props: any) => {
+interface RoundedBarProps {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  fill: string;
+}
+
+const RoundedBar = (props: RoundedBarProps) => {
   const { x, y, width, height, fill } = props;
   return <rect x={x} y={y} width={width} height={height} fill={fill} rx="3" />; 
 };
@@ -52,6 +62,7 @@ export default function Home() {
   const [keywordData, setKeywordData] = useState<KeywordCount[]>([]);
   const [allArticles, setAllArticles] = useState<Article[]>([]);
   const [selectedKeyword, setSelectedKeyword] = useState<string | null>(null);
+  const [hoveredKeyword, setHoveredKeyword] = useState<KeywordCount | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [visibleArticles, setVisibleArticles] = useState(5);
   const articlesSectionRef = useRef<HTMLDivElement>(null);
@@ -111,6 +122,10 @@ export default function Home() {
       }, 100);
     }
   };
+  
+  const handleKeywordHover = (keyword: KeywordCount | null) => {
+    setHoveredKeyword(keyword);
+  };
 
   const handleSearch = () => {
     if (searchTerm.trim() !== '') {
@@ -168,11 +183,27 @@ export default function Home() {
         </section>
 
         <section className="py-16">
-          <div className="bg-card-surface rounded-2xl shadow-lg p-6 md:p-8">
+          <div className="bg-card-surface rounded-2xl shadow-lg p-6 md:p-8 relative">
             <h3 className="text-3xl font-bold font-heading mb-8 text-center text-secondary">
               Keyword Galaxy
             </h3>
-            {!loading && <KeywordCloud keywordData={keywordData} onKeywordClick={handleKeywordClick} />}
+            {hoveredKeyword && (
+                <div className="absolute top-8 right-8 bg-card-surface/80 p-3 rounded-lg shadow-lg z-10">
+                    <p className='text-lg font-bold text-primary'>{hoveredKeyword.name}</p>
+                    <p className='text-sm text-text-dark/80'>Count: {hoveredKeyword.count}</p>
+                </div>
+            )}
+            <div style={{ height: '500px' }}>
+            {!loading && 
+                <Canvas camera={{ position: [0, 0, 30], fov: 50 }}>
+                    <color attach="background" args={['black']} />
+                    <ambientLight intensity={0.5} />
+                    <pointLight position={[10, 10, 10]} />
+                    <KeywordCloud keywords={keywordData} onKeywordClick={handleKeywordClick} onKeywordHover={handleKeywordHover} />
+                    <OrbitControls enableZoom={true} />
+                </Canvas>
+            }
+            </div>
           </div>
         </section>
 
