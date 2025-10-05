@@ -1,3 +1,4 @@
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 
@@ -132,17 +133,17 @@ const KeywordCloud = ({ keywords, onKeywordClick, onKeywordHover }: KeywordCloud
                     for (let j = i + 1; j < simulationNodes.length; j++) {
                         const similarity = cosineSimilarity(simulationNodes[i].embedding, simulationNodes[j].embedding);
                         if (similarity > 0.5) {
-                            simulationLinks.push({ source: simulationNodes[i].id, target: simulationNodes[j].id, value: similarity });
+                            simulationLinks.push({ source: simulationNodes[i].id as any, target: simulationNodes[j].id as any, value: similarity });
                         }
                     }
                 }
                 const sizeScale = scaleLinear().domain([1, 50]).range([1, 4]);
                 
                 const simulation = forceSimulation(simulationNodes)
-                    .force('link', forceLink(simulationLinks).id(d => d.id).distance(d => 100 * (1 - d.value)).strength(d => d.value))
-                    .force('charge', forceManyBody().strength(d => -d.count * 10))
+                    .force('link', forceLink<Node, Link>(simulationLinks).id((d: Node) => d.id).distance(d => 100 * (1 - d.value)).strength(d => d.value))
+                    .force('charge', forceManyBody().strength((d: any) => -d.count * 10))
                     .force('center', forceCenter())
-                    .force('collision', forceCollide().radius(d => sizeScale(d.count) + 0.5).strength(0.8))
+                    .force('collision', forceCollide().radius((d: any) => sizeScale(d.count) + 0.5).strength(0.8))
                     .stop();
 
                 for (let i = 0; i < 300; ++i) simulation.tick();
