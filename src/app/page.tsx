@@ -13,6 +13,7 @@ import {
 import Papa from 'papaparse';
 import ArticleCard from './components/ArticleCard';
 import MoreArticles from './components/MoreArticles';
+import KeywordCloud from './components/KeywordCloud';
 
 interface Article {
   title: string;
@@ -96,7 +97,7 @@ export default function Home() {
     fetchData();
   }, []);
 
-  const handleBarClick = (data: KeywordCount) => {
+  const handleKeywordClick = (data: KeywordCount) => {
     if (selectedKeyword === data.name) {
       setSelectedKeyword(null);
     } else {
@@ -166,6 +167,15 @@ export default function Home() {
           </p>
         </section>
 
+        <section className="py-16">
+          <div className="bg-card-surface rounded-2xl shadow-lg p-6 md:p-8">
+            <h3 className="text-3xl font-bold font-heading mb-8 text-center text-secondary">
+              Keyword Galaxy
+            </h3>
+            {!loading && <KeywordCloud keywordData={keywordData} onKeywordClick={handleKeywordClick} />}
+          </div>
+        </section>
+
         <section className="py-8">
           <div className="flex justify-center">
             <input
@@ -212,7 +222,7 @@ export default function Home() {
                       <YAxis stroke="var(--color-text-dark)" allowDecimals={false} />
                       <Tooltip cursor={{ fill: 'rgba(72, 191, 227, 0.1)' }} />
                       <Legend verticalAlign="top" wrapperStyle={{ color: 'var(--color-text-dark)', paddingBottom: '20px' }} />
-                      <Bar dataKey="count" fill="url(#barGradient)" onClick={handleBarClick} shape={<RoundedBar />} />
+                      <Bar dataKey="count" fill="url(#barGradient)" onClick={handleKeywordClick} shape={<RoundedBar />} />
                     </BarChart>
                   </ResponsiveContainer>
                 </div>

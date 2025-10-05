@@ -3,7 +3,7 @@
 
 ## Overview
 
-This is a Next.js application that visualizes the frequency of keywords in a dataset of space biology research papers. The application reads data from a CSV file, processes it, and displays the top keywords in a bar chart. It is styled with Tailwind CSS and uses a modern, visually appealing design.
+This is a Next.js application that visualizes the frequency of keywords in a dataset of space biology research papers. The application reads data from a CSV file, processes it, and displays the top keywords in a bar chart and an interactive 3D point cloud. It is styled with Tailwind CSS and uses a modern, visually appealing design.
 
 ## Design and Features
 
@@ -23,6 +23,7 @@ This is a Next.js application that visualizes the frequency of keywords in a dat
 ### UI Components
 
 *   **Chart**: A responsive bar chart from the `recharts` library to display keyword frequency.
+*   **3D Keyword Map**: An interactive 3D point cloud of keywords, with similar keywords clustered together.
 *   **Gradient Accent**: A subtle animated gradient is used for accents and backgrounds.
 *   **Glassmorphism**: The chart container has a frosted glass effect, with a blurred background and a subtle border.
 
@@ -30,12 +31,17 @@ This is a Next.js application that visualizes the frequency of keywords in a dat
 
 *   **Hover Effect**: When hovering over a bar in the chart, it will have a "glow" effect.
 *   **Tooltip**: The tooltip for the chart has been redesigned for better visibility and a more professional look.
+*   **3D Map Interaction**: Users can scroll, pan, and zoom the 3D keyword map to explore the keyword clusters. Hovering over a point reveals a label with the keyword.
 
-### Layout
+### 3D Keyword Map Design
 
-*   The main content is centered on the page with a generous amount of padding.
-*   The layout is responsive and adapts to different screen sizes.
+*   **Background**: `Warm Gray — #F5F5F5`
+*   **Point Colors**: `Mist Blue — #AEC6CF`, `Powder Pink — #F6C1C1`, `Pale Lilac — #D8BFD8`, `Mint Cream — #E8F8F5`
 
 ## Current Plan
 
-*   The current objective is to apply the custom design and theme to the application. This involves configuring Tailwind CSS, adding custom fonts, and applying the styles globally.
+*   Create a 3D keyword map.
+*   Use a force-directed graph to cluster similar keywords.
+*   Use `@react-three/fiber` and `@react-three/drei` for 3D rendering.
+*   Create a new `KeywordCloud.tsx` component.
+*   Integrate the component into the main page.
