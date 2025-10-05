@@ -138,10 +138,10 @@ const KeywordCloud = ({ keywords, onKeywordClick, onKeywordHover }: KeywordCloud
                 }
                 const sizeScale = scaleLinear().domain([1, 50]).range([1, 4]);
                 
-                const simulation = forceSimulation(simulationNodes, 3)
+                const simulation = forceSimulation(simulationNodes)
                     .force('link', forceLink(simulationLinks).id(d => d.id).distance(d => 100 * (1 - d.value)).strength(d => d.value))
                     .force('charge', forceManyBody().strength(d => -d.count * 10))
-                    .force('center', forceCenter(0, 0, 0))
+                    .force('center', forceCenter())
                     .force('collision', forceCollide().radius(d => sizeScale(d.count) + 0.5).strength(0.8))
                     .stop();
 
