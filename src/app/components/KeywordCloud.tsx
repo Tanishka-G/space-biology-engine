@@ -5,7 +5,7 @@ import React, { useMemo, useRef, useState, useEffect } from 'react';
 import { Html } from '@react-three/drei';
 import * as THREE from 'three';
 import { scaleLinear } from 'd3-scale';
-import { forceSimulation, forceManyBody, forceCenter, forceCollide, forceLink, SimulationNodeDatum, Link as D3Link } from 'd3-force';
+import { forceSimulation, forceManyBody, forceCenter, forceCollide, forceLink, SimulationNodeDatum, SimulationLinkDatum } from 'd3-force';
 
 interface Keyword {
   name: string;
@@ -27,7 +27,7 @@ interface Node extends SimulationNodeDatum {
   z: number;
 }
 
-interface Link extends D3Link<Node, Node> {
+interface Link extends SimulationLinkDatum<Node> {
     value: number;
 }
 
