@@ -17,6 +17,7 @@ import Papa from 'papaparse';
 import ArticleCard from './components/ArticleCard';
 import MoreArticles from './components/MoreArticles';
 import KeywordCloud from './components/KeywordCloud';
+import RoundedBar from './components/RoundedBar';
 
 interface Article {
   title: string;
@@ -29,19 +30,6 @@ interface KeywordCount {
   name: string;
   count: number;
 }
-
-interface RoundedBarProps {
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-  fill: string;
-}
-
-const RoundedBar = (props: RoundedBarProps) => {
-  const { x, y, width, height, fill } = props;
-  return <rect x={x} y={y} width={width} height={height} fill={fill} rx="3" />; 
-};
 
 const ChartPlaceholder = () => {
     const placeholderHeights = [45, 60, 30, 50, 75, 40, 55, 35, 65, 70, 45, 60, 50, 30, 75];
@@ -254,7 +242,7 @@ export default function Home() {
                       <YAxis stroke="var(--color-text-dark)" allowDecimals={false} />
                       <Tooltip cursor={{ fill: 'rgba(72, 191, 227, 0.1)' }} />
                       <Legend verticalAlign="top" wrapperStyle={{ color: 'var(--color-text-dark)', paddingBottom: '20px' }} />
-                      <Bar dataKey="count" fill="url(#barGradient)" onClick={handleKeywordClick} shape={<RoundedBar />} />
+                      <Bar dataKey="count" fill="url(#barGradient)" onClick={handleKeywordClick} shape={RoundedBar} />
                     </BarChart>
                   </ResponsiveContainer>
                 </div>
